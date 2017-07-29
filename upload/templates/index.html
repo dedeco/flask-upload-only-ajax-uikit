@@ -28,6 +28,9 @@
 
 </head>
 <body>
+
+    <h2>Upload a file</h2>
+
     <form id="upload-file" method="post" enctype="multipart/form-data">
         <fieldset style="border:0;">
             <label for="file">Select a file</label>
@@ -36,5 +39,14 @@
         </fieldset>
 
     </form>
+
+    <h2>Files uploaded (Refresh the page to check, remember this page upload files without submit)</h2>
+
+    <ul>
+    {% for f in files%}
+        <li><a href="{{url_for('download',filename=f.name)}}">{{f.name_readlabe}}</a></li>
+    {% endfor%}
+    </ul>
+
 </body>
 </html>

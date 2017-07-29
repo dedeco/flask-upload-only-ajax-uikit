@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import sys
 import argparse
 
-from upload.app import app
+from upload.views import app
 
 parser = argparse.ArgumentParser(description="Uploadr")
 parser.add_argument(
