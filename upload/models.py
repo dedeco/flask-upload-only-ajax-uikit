@@ -1,4 +1,4 @@
-from database import Base
+from upload.database import Base
 from sqlalchemy import Column, Integer, Sequence, String
 
 class File(Base):

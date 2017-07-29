@@ -4,8 +4,8 @@ import json
 
 from uuid import uuid4
 
-from database import db_session
-from models import File
+from upload.database import db_session
+from upload.models import File
 from upload import app, UPLOAD_FOLDER, files_upload
 
 @app.route("/")
