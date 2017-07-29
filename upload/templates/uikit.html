@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask - Ajax without submiting form</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/css/uikit.min.css" />
+
+    <!-- jQuery is required -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/js/uikit-icons.min.js"></script>      
+
+
+    <script language="javascript">
+        $(function() {
+            $('#upload-file-btn').click(function() {
+                var form_data = new FormData($('#upload-file')[0]);
+                $.ajax({
+                    type: 'POST',
+                    url: '/upload',
+                    data: form_data,
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    async: false,
+                    success: function(data) {
+                        console.log('Success!');
+                    },
+                });
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+
+    <form id="upload-file" method="post" enctype="multipart/form-data">
+        <div class="test-upload" uk-form-custom>
+            <input type="file" name="file" multiple>
+            <button class="uk-button uk-button-default" type="button" tabindex="-1">Select</button>                
+        </div>
+
+        <button id="upload-file-btn" type="button" class="uk-button uk-button-default">Upload</button>    
+
+    </form>
+
+</body>
+</html>

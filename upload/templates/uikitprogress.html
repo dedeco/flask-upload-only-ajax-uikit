@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask - Ajax without submiting form</title>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/css/uikit.min.css" />
+
+    <!-- jQuery is required -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- UIkit JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.25/js/uikit-icons.min.js"></script>  
+
+    <script language="javascript">
+        function Upload(){            
+            var form_data = new FormData($('#upload-file')[0]);
+            $.ajax({
+                type: 'POST',
+                url: '/upload',
+                data: form_data,
+                contentType: false,
+                cache: false,
+                processData: false,
+                async: false,
+                success: function(data) {
+                    console.log('Success!');
+                },
+            });                            
+        }
+
+        (function ($) {
+
+            var bar = $("#progressbar")[0];
+
+            UIkit.upload('.test-upload', {
+
+                url: '',
+                multiple: true,
+
+                beforeSend: function() { console.log('beforeSend', arguments); },
+                beforeAll: function() { console.log('beforeAll', arguments); },
+                load: function(){ Upload();},
+                error: function() { console.log('error', arguments); },
+                complete: function() { console.log('complete', arguments); },
+
+                loadStart: function (e) {
+                    console.log('loadStart', arguments);
+
+                    bar.removeAttribute('hidden');
+                    bar.max =  e.total;
+                    bar.value =  e.loaded;
+                },
+
+                progress: function (e) {
+                    console.log('progress', arguments);
+
+                    bar.max =  e.total;
+                    bar.value =  e.loaded;
+
+                },
+
+                loadEnd: function (e) {
+                    console.log('loadEnd', arguments);
+
+                    bar.max =  e.total;
+                    bar.value =  e.loaded;
+                },
+
+                completeAll: function () {
+                    console.log('completeAll', arguments);
+
+                    setTimeout(function () {
+                        bar.setAttribute('hidden', 'hidden');
+                    }, 1000);
+
+                    alert('Upload Completed');
+                }
+            });
+
+        })(jQuery);
+
+
+
+    </script>
+
+</head>
+<body>
+    <form id="upload-file" method="post" enctype="multipart/form-data">
+
+        <div class="test-upload uk-placeholder uk-text-center">
+            <span uk-icon="icon: cloud-upload"></span>
+            <span class="uk-text-middle">Attach binaries by dropping them here or</span>
+            <div uk-form-custom>
+                <input type="file" name="file" multiple> 
+                <span class="uk-link">selecting one</span>
+            </div>
+        </div>
+
+        <button id="upload-file-btn" type="button" class="uk-button uk-button-default">Upload</button>    
+
+    </form>
+</body>
+</html>
