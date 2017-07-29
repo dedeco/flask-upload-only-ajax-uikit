@@ -17,14 +17,19 @@
                     cache: false,
                     processData: false,
                     async: false,
+                    dataType: 'json',
                     success: function(data) {
-                        console.log('Success!');
-                    },
-                });
+                        var array = data.files;
+                        for (var i = 0, len = array.length; i < len; i++) {
+                            $("#files").append('<li><a href="{{url_for("download",filename='+array[i].name +')}}">' + array[i].name_readlabe + '</a></li>');
+                      }
+                  },
+              });
             });
         });
 
     </script>
+
 
 </head>
 <body>
@@ -40,9 +45,9 @@
 
     </form>
 
-    <h2>Files uploaded (Refresh the page to check, remember this page upload files without submit)</h2>
+    <h2>Files uploaded (without submit)</h2>
 
-    <ul>
+    <ul id='files'>
     {% for f in files%}
         <li><a href="{{url_for('download',filename=f.name)}}">{{f.name_readlabe}}</a></li>
     {% endfor%}

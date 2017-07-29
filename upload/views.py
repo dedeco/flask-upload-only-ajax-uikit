@@ -28,7 +28,7 @@ def uikitprogress():
 
 @app.route("/upload", methods=["POST"])
 def upload():
-
+    files = []
     form = request.form    
     target = UPLOAD_FOLDER
 
@@ -49,13 +49,15 @@ def upload():
 
         upload.save(destination)
     
-    return ajax_response(True, destination)
+        files.append({'id':f.id,'name':f.name,'name_readlabe':f.name_readlabe})
 
-def ajax_response(status, msg):
+    return ajax_response(True, files)
+
+def ajax_response(status, files):
     status_code = "ok" if status else "error"
     return json.dumps(dict(
         status=status_code,
-        msg=msg,
+        files=files,
     ))
 
 
